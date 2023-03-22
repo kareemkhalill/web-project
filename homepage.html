@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>homepage</title>
+    <link rel="stylesheet" href="homepage.css">
+
+</head>
+
+<body>
+
+    <div class="img">
+        <!-- Header -->
+        <header>
+
+            <a class="logo" href="#"><img src="can-i-fly-web.jpg" alt="Logo"></a>
+            <a class="login" href="login.html">Login</a>
+            <a class="sign up" href="signup.html">sign up</a>
+            </nav>
+        </header>
+
+        <div class="container">
+            <h1>Find the perfect vacation rental</h1>
+            <p>We search millions of hotels and showcase only the best stays.</p>
+            <form>
+
+                <input type="text" placeholder="search" id="search" required>
+                <input type="date" placeholder="check in date" required>
+                <input type="date" placeholder="check out date" required>
+                <div id="suggestions-container"></div>
+
+                <input type="submit" value="search">
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    const searchInput = document.getElementById('search');
+    const suggestionsContainer = document.getElementById('suggestions-container');
+    const fruits = ['Apple', 'Apricot', 'Banana', 'Blueberry', 'Cherry', 'Cranberry', 'Grape', 'Lemon', 'Lime', 'Orange', 'Peach', 'Pear', 'Pineapple', 'Strawberry', 'Watermelon'];
+
+    function showSuggestions() {
+        const searchTerm = searchInput.value.trim();
+        if (searchTerm === '') {
+            suggestionsContainer.innerHTML = '';
+            return;
+        }
+        const regex = new RegExp(`^${searchTerm}`, 'i');
+        const filteredFruits = fruits.filter(fruit => regex.test(fruit));
+        suggestionsContainer.innerHTML = '';
+        filteredFruits.forEach(fruit => {
+            const suggestion = document.createElement('div');
+            suggestion.classList.add('suggestion');
+            suggestion.textContent = fruit;
+            suggestion.addEventListener('click', () => {
+                searchInput.value = fruit;
+                suggestionsContainer.innerHTML = '';
+            });
+            suggestionsContainer.appendChild(suggestion);
+        });
+    }
+
+    searchInput.addEventListener('input', showSuggestions);
+
+    // Set max-width of suggestionsContainer to the same width as searchInput
+    suggestionsContainer.style.maxWidth = `${searchInput.offsetWidth}px`;
+</script>
+
+</html>
